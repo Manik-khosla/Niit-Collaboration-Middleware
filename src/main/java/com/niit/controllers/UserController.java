@@ -87,9 +87,10 @@ public class UserController {
     		System.out.println("In UserController Update profile function Invoked");
     		String email=(String)session.getAttribute("email");
     		if(email==null)
-    		{
-    			Errorclass ec=new Errorclass(23,"Please Login To Update Your Profile");
-    			return new ResponseEntity<Errorclass>(ec,HttpStatus.UNAUTHORIZED);
+    		{   
+    			System.out.println("Email is null");
+    			Errorclass ec=new Errorclass(23,"Please Login Again");
+    			return new ResponseEntity<Errorclass>(ec,HttpStatus.NETWORK_AUTHENTICATION_REQUIRED);
     		}
     		else{
     			System.out.println("Updating user details");
@@ -98,7 +99,30 @@ public class UserController {
     		    return new ResponseEntity<User>(user,HttpStatus.OK);
     	}
     	}
-	  
+	    
+    	
+    	@RequestMapping(value="/Logout",method=RequestMethod.PUT)
+    	public ResponseEntity<?>Logout(HttpSession session)
+    	{
+    	String email=(String)session.getAttribute("email");	
+    	if(email!=null)
+    	{
+    		System.err.println("Logout user--->"+email);
+    		System.out.println("sessionId--->"+session.getId());
+    		User user=userdao.Getuser(email);
+    		user.setOnline(false);
+    		userdao.UpdateUserOnlineStatus(user);
+    		session.removeAttribute("email");
+    		session.invalidate();
+    		return new ResponseEntity<Void>(HttpStatus.OK);
+    	}
+    	else
+    	{
+    	Errorclass ec=new Errorclass(28,"Please Login");
+    	return new ResponseEntity<Errorclass>(ec,HttpStatus.NETWORK_AUTHENTICATION_REQUIRED);
+    	}
+    	}
+    	
     	
     	@RequestMapping(value="/GetAllUsers",method=RequestMethod.GET)
        public ResponseEntity<?>GetAllUsers()
@@ -109,7 +133,7 @@ public class UserController {
 	    
 	    if(lou.isEmpty())
 	    {
-	    Errorclass ec=new Errorclass(28,"List is empty");
+	    Errorclass ec=new Errorclass(35,"List is empty");
 	    return new ResponseEntity<Errorclass>(ec,HttpStatus.NO_CONTENT)	;
 	    }
 	    return new ResponseEntity<List<User>>(lou,HttpStatus.OK);
