@@ -104,6 +104,7 @@ public class UserController {
     	@RequestMapping(value="/Logout",method=RequestMethod.PUT)
     	public ResponseEntity<?>Logout(HttpSession session)
     	{
+    	System.out.println("In UserController Logout function Invoked");
     	String email=(String)session.getAttribute("email");	
     	if(email!=null)
     	{
