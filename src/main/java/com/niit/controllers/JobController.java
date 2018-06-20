@@ -119,7 +119,7 @@ public class JobController {
 	}
 	
 	
-	@RequestMapping(value="/Getinactivejobs",method=RequestMethod.GET)
+	@RequestMapping(value="/GetInactivejobs",method=RequestMethod.GET)
 	public ResponseEntity<?>GetInActiveJobs(HttpSession session)
 	{   
 		System.out.println("In JobController Getinactivejobs function Invoked");
