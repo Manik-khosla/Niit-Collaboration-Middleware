@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.niit.Dao.JobDao;
 import com.niit.Dao.UserDao;
 import com.niit.model.Errorclass;
-import com.niit.model.Job;
+import com.niit.model.Jobs;
 import com.niit.model.User;
 
 @RestController
@@ -32,7 +32,7 @@ public class JobController {
 	 }
 	
 	@RequestMapping(value="/Addjob",method=RequestMethod.POST)
-	public ResponseEntity<?> Addjob(@RequestBody Job job,HttpSession session)
+	public ResponseEntity<?> Addjob(@RequestBody Jobs job,HttpSession session)
 	{   
 		System.out.println("In JobController Addjob function Invoked");
 		if(session.getAttribute("email")==null)
@@ -65,7 +65,7 @@ public class JobController {
 	
 	
 	@RequestMapping(value="/Updatejob",method=RequestMethod.PUT)
-	public ResponseEntity<?>Updatejob(@RequestBody Job job,HttpSession session)
+	public ResponseEntity<?>Updatejob(@RequestBody Jobs job,HttpSession session)
 	{   
 		System.out.println("In JobController Update job function Invoked");
 		if(session.getAttribute("email")==null){
@@ -106,8 +106,8 @@ public class JobController {
 		}
 		try
 		{
-		List<Job>Activejobs=jobdao.Getactivejobs();
-		return new ResponseEntity<List<Job>> (Activejobs,HttpStatus.OK);
+		List<Jobs>Activejobs=jobdao.Getactivejobs();
+		return new ResponseEntity<List<Jobs>> (Activejobs,HttpStatus.OK);
 		}
 		catch(Exception e)
 		{
@@ -135,8 +135,8 @@ public class JobController {
 		{
 		try
 		{
-		List<Job>Inactivejobs=jobdao.Getinactivejobs();	
-		return new ResponseEntity<List<Job>>(Inactivejobs,HttpStatus.OK);
+		List<Jobs>Inactivejobs=jobdao.Getinactivejobs();	
+		return new ResponseEntity<List<Jobs>>(Inactivejobs,HttpStatus.OK);
 		}
 		catch(Exception e)
 		{   

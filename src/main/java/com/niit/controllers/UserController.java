@@ -60,7 +60,9 @@ public class UserController {
     	System.out.println("In UserController Login function Invoked");
     	System.out.println("Validating  User Credentials");
     	System.out.println("User-Email--->"+user.getEmail()+"   "+"User-password--->"+user.getPassword());
+    	try{
 		User validuser=userdao.Login(user);
+    	
 		if(validuser==null)
 		{   
 			System.err.println("User Credentials are  Incorrect");
@@ -79,6 +81,12 @@ public class UserController {
 		return new ResponseEntity<User>(validuser,HttpStatus.OK);
 		}
 	  }
+    	catch(Exception e)
+    	{
+    		Errorclass ec=new Errorclass(23,"Unable to Login due to Internal server error.Please try again");
+			return new ResponseEntity<Errorclass>(ec,HttpStatus.INTERNAL_SERVER_ERROR);	
+    	}
+	   }
     	
     
     	@RequestMapping(value="/Updateprofile",method=RequestMethod.PUT)
@@ -89,14 +97,21 @@ public class UserController {
     		if(email==null)
     		{   
     			System.out.println("Email is null");
-    			Errorclass ec=new Errorclass(23,"Please Login Again");
+    			Errorclass ec=new Errorclass(28,"Please Login Again");
     			return new ResponseEntity<Errorclass>(ec,HttpStatus.NETWORK_AUTHENTICATION_REQUIRED);
     		}
     		else{
+    			try{
     			System.out.println("Updating user details");
     			userdao.Updateprofiledetails(user);
     			System.err.println("User details successfully updated");
     		    return new ResponseEntity<User>(user,HttpStatus.OK);
+    			}
+    			catch(Exception e)
+    			{
+    				Errorclass ec=new Errorclass(35,"Unable to update details due to some error");
+        			return new ResponseEntity<Errorclass>(ec,HttpStatus.INTERNAL_SERVER_ERROR);	
+    			}
     	}
     	}
 	    
@@ -119,7 +134,7 @@ public class UserController {
     	}
     	else
     	{
-    	Errorclass ec=new Errorclass(28,"Please Login");
+    	Errorclass ec=new Errorclass(17,"Please Login");
     	return new ResponseEntity<Errorclass>(ec,HttpStatus.NETWORK_AUTHENTICATION_REQUIRED);
     	}
     	}
@@ -134,7 +149,7 @@ public class UserController {
 	    
 	    if(lou.isEmpty())
 	    {
-	    Errorclass ec=new Errorclass(35,"List is empty");
+	    Errorclass ec=new Errorclass(15,"List is empty");
 	    return new ResponseEntity<Errorclass>(ec,HttpStatus.NO_CONTENT)	;
 	    }
 	    return new ResponseEntity<List<User>>(lou,HttpStatus.OK);
