@@ -32,7 +32,7 @@ public class UserController {
 	
 		System.out.println("In UserController Registration function Invoked");
 		try{
-		if(userdao.isEmailUnique(user.getEmail()))
+		if(userdao.IsEmailUnique(user.getEmail()))
 		{
 		System.out.println("User with username "+user.getEmail()+" Not Present ---> Registering user");	
 		userdao.Registration(user);
@@ -92,7 +92,7 @@ public class UserController {
     	@RequestMapping(value="/Updateprofile",method=RequestMethod.PUT)
     	public ResponseEntity<?> UpdateProfile(@RequestBody User user,HttpSession session)
     	{
-    		System.out.println("In UserController Update profile function Invoked");
+    		System.out.println("In UserController UpdateProfile function Invoked");
     		String email=(String)session.getAttribute("email");
     		if(email==null)
     		{   
@@ -103,7 +103,7 @@ public class UserController {
     		else{
     			try{
     			System.out.println("Updating user details");
-    			userdao.Updateprofiledetails(user);
+    			userdao.UpdateProfileDetails(user);
     			System.err.println("User details successfully updated");
     		    return new ResponseEntity<User>(user,HttpStatus.OK);
     			}
@@ -125,7 +125,7 @@ public class UserController {
     	{
     		System.err.println("Logout user--->"+email);
     		System.out.println("sessionId--->"+session.getId());
-    		User user=userdao.Getuser(email);
+    		User user=userdao.GetUser(email);
     		user.setOnline(false);
     		userdao.UpdateUserOnlineStatus(user);
     		session.removeAttribute("email");
@@ -140,7 +140,7 @@ public class UserController {
     	}
     	
     	
-    	@RequestMapping(value="/GetAllUsers",method=RequestMethod.GET)
+    	@RequestMapping(value="/Getallusers",method=RequestMethod.GET)
        public ResponseEntity<?>GetAllUsers()
 	   {
 	    System.out.println("In UserController GetAllUsers function Invoked");

@@ -32,22 +32,22 @@ public class JobController {
 	 }
 	
 	@RequestMapping(value="/Addjob",method=RequestMethod.POST)
-	public ResponseEntity<?> Addjob(@RequestBody Jobs job,HttpSession session)
+	public ResponseEntity<?> AddJob(@RequestBody Jobs job,HttpSession session)
 	{   
-		System.out.println("In JobController Addjob function Invoked");
+		System.out.println("In JobController AddJob function Invoked");
 		if(session.getAttribute("email")==null)
 		{
 			Errorclass ec=new Errorclass(19,"Please Login");
 			return new ResponseEntity<Errorclass>(ec,HttpStatus.UNAUTHORIZED);
 		}
 		String email=(String) session.getAttribute("email");
-		User user=userdao.Getuser(email);
+		User user=userdao.GetUser(email);
 		if(user.getRole().equals("ADMIN"))
 		{   
 			try{
 			job.setPostedOn(new Date());
 			job.setActive(true);
-			jobdao.Addjob(job);
+			jobdao.AddJob(job);
 			return new  ResponseEntity<Void>(HttpStatus.OK);
 			}
 			catch(Exception e)
@@ -65,19 +65,19 @@ public class JobController {
 	
 	
 	@RequestMapping(value="/Updatejob",method=RequestMethod.PUT)
-	public ResponseEntity<?>Updatejob(@RequestBody Jobs job,HttpSession session)
+	public ResponseEntity<?>UpdateJob(@RequestBody Jobs job,HttpSession session)
 	{   
-		System.out.println("In JobController Update job function Invoked");
+		System.out.println("In JobController UpdateJob function Invoked");
 		if(session.getAttribute("email")==null){
     		Errorclass ec=new Errorclass(20,"Please Login");
     		return new ResponseEntity<Errorclass>(ec,HttpStatus.UNAUTHORIZED);
     	}
 		String email=(String) session.getAttribute("email");
-		User user=userdao.Getuser(email);
+		User user=userdao.GetUser(email);
 		if(user.getRole().equals("ADMIN"))
 		{  
 			try{
-			jobdao.Updatejob(job);
+			jobdao.UpdateJob(job);
 			return new ResponseEntity<Void>(HttpStatus.OK);
 			}
 			catch(Exception e)
@@ -98,7 +98,7 @@ public class JobController {
 	@RequestMapping(value="/Getactivejobs",method=RequestMethod.GET)
 	public ResponseEntity<?>GetActiveJobs(HttpSession session)
 	{   
-		System.out.println("In JobController Getactivejobs function Invoked");
+		System.out.println("In JobController GetActiveJobs function Invoked");
 		if(session.getAttribute("email")==null)
 		{
 			Errorclass ec=new Errorclass(15,"Please Login");
@@ -106,7 +106,7 @@ public class JobController {
 		}
 		try
 		{
-		List<Jobs>Activejobs=jobdao.Getactivejobs();
+		List<Jobs>Activejobs=jobdao.GetActiveJobs();
 		return new ResponseEntity<List<Jobs>> (Activejobs,HttpStatus.OK);
 		}
 		catch(Exception e)
@@ -119,23 +119,23 @@ public class JobController {
 	}
 	
 	
-	@RequestMapping(value="/GetInactivejobs",method=RequestMethod.GET)
+	@RequestMapping(value="/Getinactivejobs",method=RequestMethod.GET)
 	public ResponseEntity<?>GetInActiveJobs(HttpSession session)
 	{   
-		System.out.println("In JobController Getinactivejobs function Invoked");
+		System.out.println("In JobController GetInActiveJobs function Invoked");
 		if(session.getAttribute("email")==null)
 		{
 			Errorclass ec=new Errorclass(23,"Please Login");
 			return new ResponseEntity<Errorclass>(ec,HttpStatus.UNAUTHORIZED);
 		}
 		String email=(String)session.getAttribute("email");
-		User user=userdao.Getuser(email);
+		User user=userdao.GetUser(email);
 		
 		if(user.getRole().equals("ADMIN"))
 		{
 		try
 		{
-		List<Jobs>Inactivejobs=jobdao.Getinactivejobs();	
+		List<Jobs>Inactivejobs=jobdao.GetInActiveJobs();	
 		return new ResponseEntity<List<Jobs>>(Inactivejobs,HttpStatus.OK);
 		}
 		catch(Exception e)
