@@ -92,7 +92,7 @@ public class BlogController {
     	 String email=(String)session.getAttribute("email");
     	 try{
  		  User user=userdao.GetUser(email);
- 		  if(user.getRole()=="ADMIN")
+ 		  if(user.getRole().equals("ADMIN"))
  		  {
  			List<Blogs>Blogs_waiting_approval=blogdao.GetBlogsWaitingApproval();  
  			return new ResponseEntity<List<Blogs>>(Blogs_waiting_approval,HttpStatus.OK);
@@ -126,7 +126,7 @@ public class BlogController {
     	try
     	{
     		User user=userdao.GetUser(email);
-    		if(user.getRole()=="ADMIN")
+    		if(user.getRole().equals("ADMIN"))
     		{   
     			Blogs blog=blogdao.GetBlog(id);
     			blog.setApproved(true);
