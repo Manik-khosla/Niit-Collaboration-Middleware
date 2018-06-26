@@ -2,15 +2,20 @@ package com.niit.controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.niit.Dao.UserDao;
 import com.niit.model.Errorclass;
@@ -77,6 +82,7 @@ public class UserController {
 		validuser.setOnline(true);
 		System.err.print("Changing Online status of user to TRUE");
 		userdao.UpdateUserOnlineStatus(validuser);
+		validuser.setProfilepicture(null);
 		System.out.println("User Online-status Updated");
 		return new ResponseEntity<User>(validuser,HttpStatus.OK);
 		}
@@ -90,7 +96,7 @@ public class UserController {
     	
     
     	@RequestMapping(value="/Updateprofile",method=RequestMethod.PUT)
-    	public ResponseEntity<?> UpdateProfile(@RequestBody User user,HttpSession session)
+    	public ResponseEntity<?> UpdateProfile(@RequestBody User user,HttpSession session,HttpServletResponse response)
     	{
     		System.out.println("In UserController UpdateProfile function Invoked");
     		String email=(String)session.getAttribute("email");
@@ -114,9 +120,36 @@ public class UserController {
     			}
     	}
     	}
-	    
     	
-    	@RequestMapping(value="/Logout",method=RequestMethod.PUT)
+    	
+        @RequestMapping(value="/Updateprofilepicture",method=RequestMethod.POST)
+    	public void UpdateProfilePicture(@RequestParam MultipartFile Profilepicture,HttpSession session,HttpServletResponse response)
+    	{
+        	try{
+    		System.out.println("In UserController UpdateProfilePicture function Invoked");
+    		String email=(String)session.getAttribute("email");
+    		if(email==null)
+    		{   
+    			System.out.println("Email is null");
+    			Errorclass ec=new Errorclass(28,"Please Login Again");
+    		}
+    		
+    			User user=userdao.GetUser(email);
+    			user.setProfilepicture(Profilepicture.getBytes());
+    			System.err.println(Profilepicture.getOriginalFilename());
+    			System.err.println(Profilepicture.getSize());
+    			userdao.UpdateProfileDetails(user);
+    			System.err.println("File successfully uploaded");
+
+    
+    		}
+          catch(Exception e)
+           {
+        	System.err.println("Exception occured could not update profile picture");
+           }
+    	}
+    	
+	    @RequestMapping(value="/Logout",method=RequestMethod.PUT)
     	public ResponseEntity<?>Logout(HttpSession session)
     	{
     	System.out.println("In UserController Logout function Invoked");
@@ -137,6 +170,15 @@ public class UserController {
     	Errorclass ec=new Errorclass(17,"Please Login");
     	return new ResponseEntity<Errorclass>(ec,HttpStatus.NETWORK_AUTHENTICATION_REQUIRED);
     	}
+    	}
+    	
+    	
+    	@RequestMapping(value="/Getprofilepicture/{email:.+}",method=RequestMethod.GET)
+    	public byte[] GetProfileImage(@PathVariable String email,HttpSession session)
+    	{   
+    	    byte[] profilepic=userdao.GetProfilepicture(email);
+    		return profilepic;
+    
     	}
     	
     	

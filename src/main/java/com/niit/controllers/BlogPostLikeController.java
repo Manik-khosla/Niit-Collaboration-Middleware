@@ -1,5 +1,7 @@
 package com.niit.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +66,23 @@ public class BlogPostLikeController {
 		}
 		
 	}
+	}
+	
+	@RequestMapping(value="/Getalllikedblogs",method=RequestMethod.GET)
+	public ResponseEntity<?>GetAllLikedBlogs(HttpSession session)
+	{
+		System.out.println("In BlogPostLikeController GetAllLikedBlogs function invoked");
+		if(session.getAttribute("email")==null)
+		{
+			Errorclass ec=new Errorclass(75,"Please Login");
+			return new ResponseEntity<Errorclass>(ec,HttpStatus.UNAUTHORIZED);
+		}
+		else
+		{  
+			String email=(String) session.getAttribute("email");
+			List<BlogPostLikes>AllLikedBlogs=blogpostlikedao.GetAllLikedBlogs(email);
+			return new ResponseEntity<List<BlogPostLikes>>(AllLikedBlogs,HttpStatus.OK);
+		}
 	}
 
 }
