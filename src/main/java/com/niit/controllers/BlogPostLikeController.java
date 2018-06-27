@@ -29,7 +29,8 @@ public class BlogPostLikeController {
 	 {
 		System.out.println("BlogPostLikeController class  Instantiated");
 	 }
-	@RequestMapping(value="/Likeblog/{blogid}",method=RequestMethod.GET)
+	 
+	 @RequestMapping(value="/Likeblog/{blogid}",method=RequestMethod.GET)
 	private ResponseEntity<?> Like_DislikeBlog(@PathVariable int blogid,HttpSession session)
 	{
 	System.out.println("In BlogPostLikeController Like_DislikeBlog function invoked");
@@ -67,6 +68,7 @@ public class BlogPostLikeController {
 		
 	}
 	}
+	
 	
 	@RequestMapping(value="/Getalllikedblogs",method=RequestMethod.GET)
 	public ResponseEntity<?>GetAllLikedBlogs(HttpSession session)

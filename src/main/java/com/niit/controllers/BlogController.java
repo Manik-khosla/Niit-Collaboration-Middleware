@@ -112,7 +112,6 @@ public class BlogController {
      }
      
      
-     
      @RequestMapping(value="/Approveblog/{id}",method=RequestMethod.GET)
      public ResponseEntity<?> UpdateBlog(@PathVariable int id,HttpSession session)
      {
