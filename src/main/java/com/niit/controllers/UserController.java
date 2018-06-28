@@ -47,7 +47,7 @@ public class UserController {
 		else
 		{
 	    System.err.println("A User with username " + user.getEmail() + " already exists ---> User cannot be registered");
-		Errorclass ec=new Errorclass(10,"Username already exists.Please choose a different username");
+		Errorclass ec=new Errorclass(37,"Username already exists.Please choose a different username");
 		return new ResponseEntity<Errorclass>(ec,HttpStatus.CONFLICT);
 		}
 	  }
@@ -71,7 +71,7 @@ public class UserController {
 		if(validuser==null)
 		{   
 			System.err.println("User Credentials are  Incorrect");
-			Errorclass ec=new Errorclass(27,"Invalid Credentials");
+			Errorclass ec=new Errorclass(51,"Invalid Credentials");
 			return new ResponseEntity<Errorclass>(ec,HttpStatus.NOT_FOUND);
 		}
 		else
@@ -89,7 +89,7 @@ public class UserController {
 	  }
     	catch(Exception e)
     	{
-    		Errorclass ec=new Errorclass(23,"Unable to Login due to Internal server error.Please try again");
+    		Errorclass ec=new Errorclass(35,"Unable to Login due to Internal server error.Please try again");
 			return new ResponseEntity<Errorclass>(ec,HttpStatus.INTERNAL_SERVER_ERROR);	
     	}
 	   }
@@ -103,7 +103,7 @@ public class UserController {
     		if(email==null)
     		{   
     			System.out.println("Email is null");
-    			Errorclass ec=new Errorclass(28,"Please Login Again");
+    			Errorclass ec=new Errorclass(17,"Please Login Again");
     			return new ResponseEntity<Errorclass>(ec,HttpStatus.NETWORK_AUTHENTICATION_REQUIRED);
     		}
     		else{
@@ -115,7 +115,7 @@ public class UserController {
     			}
     			catch(Exception e)
     			{
-    				Errorclass ec=new Errorclass(35,"Unable to update details due to some error");
+    				Errorclass ec=new Errorclass(48,"Unable to update details due to some error");
         			return new ResponseEntity<Errorclass>(ec,HttpStatus.INTERNAL_SERVER_ERROR);	
     			}
     	}
@@ -131,7 +131,7 @@ public class UserController {
     		if(email==null)
     		{   
     			System.out.println("Email is null");
-    			Errorclass ec=new Errorclass(28,"Please Login Again");
+    			Errorclass ec=new Errorclass(45,"Please Login Again");
     		}
     		
     			User user=userdao.GetUser(email);
@@ -168,7 +168,7 @@ public class UserController {
     	}
     	else
     	{
-    	Errorclass ec=new Errorclass(17,"Please Login");
+    	Errorclass ec=new Errorclass(15,"Please Login");
     	return new ResponseEntity<Errorclass>(ec,HttpStatus.NETWORK_AUTHENTICATION_REQUIRED);
     	}
     	}
@@ -178,7 +178,14 @@ public class UserController {
     	public byte[] GetProfileImage(@PathVariable String email,HttpSession session)
     	{   
     	    byte[] profilepic=userdao.GetProfilepicture(email);
+    	    if(profilepic==null)
+    	    {
+    	    	return null;
+    	    }
+    	    else
+    	    {
     		return profilepic;
+    	    }
     
     	}
     	
@@ -192,7 +199,7 @@ public class UserController {
 	    
 	    if(lou.isEmpty())
 	    {
-	    Errorclass ec=new Errorclass(15,"List is empty");
+	    Errorclass ec=new Errorclass(29,"List is empty");
 	    return new ResponseEntity<Errorclass>(ec,HttpStatus.NO_CONTENT)	;
 	    }
 	    return new ResponseEntity<List<User>>(lou,HttpStatus.OK);

@@ -38,7 +38,7 @@ public class BlogController {
     	System.out.println("In BlogController PostBlog function Invoked");
     	if(ssn.getAttribute("email")==null)
     	{
-    		Errorclass ec=new Errorclass(24,"Please Login");
+    		Errorclass ec=new Errorclass(30,"Please Login");
     		return new ResponseEntity<Errorclass>(ec,HttpStatus.UNAUTHORIZED);
     	}
     	String email=(String) ssn.getAttribute("email");
@@ -53,7 +53,7 @@ public class BlogController {
     	}
     	catch(Exception e)
     	{
-    		Errorclass ec=new Errorclass(16,"Unable to post blog due to some error");
+    		Errorclass ec=new Errorclass(8,"Unable to post blog due to some error");
     		return new ResponseEntity<Errorclass>(ec,HttpStatus.INTERNAL_SERVER_ERROR); 
     	}
      }
@@ -65,7 +65,7 @@ public class BlogController {
     	System.out.println("In BlogController GetApprovedBlogslist function Invoked");
     	 if(session.getAttribute("email")==null)
      	{
-     		Errorclass ec=new Errorclass(07,"Please Login");
+     		Errorclass ec=new Errorclass(3,"Please Login");
      		return new ResponseEntity<Errorclass>(ec,HttpStatus.UNAUTHORIZED);
      	} 
     	 try{
@@ -74,7 +74,7 @@ public class BlogController {
     	 }
     	 catch(Exception e)
     	 {
-    		 Errorclass ec=new Errorclass(24,"Unable to get blogs due to some error");
+    		 Errorclass ec=new Errorclass(19,"Unable to get blogs due to some error");
      		return new ResponseEntity<Errorclass>(ec,HttpStatus.INTERNAL_SERVER_ERROR);
     	 }
      }
@@ -86,7 +86,7 @@ public class BlogController {
     	 System.out.println("In BlogController GetBlogsWaitingApproval function Invoked");
     	 if(session.getAttribute("email")==null)
       	{
-      		Errorclass ec=new Errorclass(101,"Please Login");
+      		Errorclass ec=new Errorclass(18,"Please Login");
       		return new ResponseEntity<Errorclass>(ec,HttpStatus.UNAUTHORIZED);
       	} 
     	 String email=(String)session.getAttribute("email");
@@ -99,13 +99,13 @@ public class BlogController {
  		  }
  		  else
  		  {
- 			 Errorclass ec=new Errorclass(110,"Access Denied");
+ 			 Errorclass ec=new Errorclass(1,"Access Denied");
        		return new ResponseEntity<Errorclass>(HttpStatus.UNAUTHORIZED);  
  		  } 
     	 }
     	 catch(Exception e)
     	 {
-    		Errorclass ec=new Errorclass(37,"Unable to get blogs due to some error");
+    		Errorclass ec=new Errorclass(20,"Unable to get blogs due to some error");
      		return new ResponseEntity<Errorclass>(ec,HttpStatus.INTERNAL_SERVER_ERROR);
     	 }
     	 

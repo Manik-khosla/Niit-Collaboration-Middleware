@@ -37,7 +37,7 @@ public class JobController {
 		System.out.println("In JobController AddJob function Invoked");
 		if(session.getAttribute("email")==null)
 		{
-			Errorclass ec=new Errorclass(19,"Please Login");
+			Errorclass ec=new Errorclass(15,"Please Login");
 			return new ResponseEntity<Errorclass>(ec,HttpStatus.UNAUTHORIZED);
 		}
 		String email=(String) session.getAttribute("email");
@@ -52,13 +52,13 @@ public class JobController {
 			}
 			catch(Exception e)
 			{
-				Errorclass ec=new Errorclass(18,"Unable to Add a new job");
+				Errorclass ec=new Errorclass(7,"Unable to Add a new job");
 				return new ResponseEntity<Errorclass>(ec,HttpStatus.INTERNAL_SERVER_ERROR);	
 			}
 		}
 		else
 		{   
-			Errorclass ec=new Errorclass(01,"Access Denied");
+			Errorclass ec=new Errorclass(23,"Access Denied");
 			return new ResponseEntity<Errorclass>(ec,HttpStatus.UNAUTHORIZED);
 		}
 	}
@@ -69,7 +69,7 @@ public class JobController {
 	{   
 		System.out.println("In JobController UpdateJob function Invoked");
 		if(session.getAttribute("email")==null){
-    		Errorclass ec=new Errorclass(20,"Please Login");
+    		Errorclass ec=new Errorclass(2,"Please Login");
     		return new ResponseEntity<Errorclass>(ec,HttpStatus.UNAUTHORIZED);
     	}
 		String email=(String) session.getAttribute("email");
@@ -82,13 +82,13 @@ public class JobController {
 			}
 			catch(Exception e)
 			{
-				Errorclass ec=new Errorclass(48,"Unable to Update Job");
+				Errorclass ec=new Errorclass(18,"Unable to Update Job");
 				return new ResponseEntity<Errorclass>(ec,HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		}
 		else
 		{
-			Errorclass ec=new Errorclass(45,"Access Denied Please Login");
+			Errorclass ec=new Errorclass(11,"Access Denied Please Login");
 			return new ResponseEntity<Errorclass>(ec,HttpStatus.UNAUTHORIZED);
 		}
 		
@@ -101,7 +101,7 @@ public class JobController {
 		System.out.println("In JobController GetActiveJobs function Invoked");
 		if(session.getAttribute("email")==null)
 		{
-			Errorclass ec=new Errorclass(15,"Please Login");
+			Errorclass ec=new Errorclass(1,"Please Login");
 			return new ResponseEntity<Errorclass>(ec,HttpStatus.UNAUTHORIZED);
 		}
 		try
@@ -111,7 +111,7 @@ public class JobController {
 		}
 		catch(Exception e)
 		{
-			Errorclass ec=new Errorclass(07,"Unable to get active jobs");
+			Errorclass ec=new Errorclass(3,"Unable to get active jobs");
 			return new ResponseEntity<Errorclass>(ec,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
@@ -125,7 +125,7 @@ public class JobController {
 		System.out.println("In JobController GetInActiveJobs function Invoked");
 		if(session.getAttribute("email")==null)
 		{
-			Errorclass ec=new Errorclass(23,"Please Login");
+			Errorclass ec=new Errorclass(9,"Please Login");
 			return new ResponseEntity<Errorclass>(ec,HttpStatus.UNAUTHORIZED);
 		}
 		String email=(String)session.getAttribute("email");
@@ -140,13 +140,13 @@ public class JobController {
 		}
 		catch(Exception e)
 		{   
-			Errorclass ec=new Errorclass(03,"Unable to get Inactive Jobs");
+			Errorclass ec=new Errorclass(27,"Unable to get Inactive Jobs");
 			return new ResponseEntity<Errorclass>(ec,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		}
 		else
 		{
-			Errorclass ec=new Errorclass(9,"Access Denied");
+			Errorclass ec=new Errorclass(26,"Access Denied");
 			return new ResponseEntity<Errorclass>(ec,HttpStatus.UNAUTHORIZED);
 		}
 		
